@@ -1,11 +1,13 @@
 'use strict';
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber;
 let totalScore = 20;
 let highScore = 0;
-const messageObj = document.getElementsByClassName('message')[0];
-const scoreObj = document.getElementsByClassName('score')[0];
 const numberDivObj = document.getElementsByClassName('number')[0];
-const highScoreNumberObj = document.getElementsByClassName('highscore')[0];
+
+function randomNumber() {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+}
+randomNumber();
 
 function updateContent(className, message) {
   document.getElementsByClassName(className)[0].textContent = message;
@@ -28,7 +30,7 @@ function guessScore(guess) {
       guess < secretNumber
         ? updateContent('message', 'Too Low!')
         : updateContent('message', 'Too High!');
-      scoreObj.textContent = --totalScore;
+      updateContent('score', --totalScore);
     }
   } else {
     updateContent('message', '😢 You lost the game!');
@@ -37,7 +39,6 @@ function guessScore(guess) {
   }
 }
 
-//function is the event handler
 document
   .getElementsByClassName('check')[0]
   .addEventListener('click', function () {
@@ -54,7 +55,7 @@ document
 document
   .getElementsByClassName('again')[0]
   .addEventListener('click', function () {
-    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    randomNumber();
     totalScore = 20;
 
     updateContent('message', 'Start guessing...');
